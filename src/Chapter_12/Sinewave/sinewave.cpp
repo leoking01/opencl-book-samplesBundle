@@ -38,7 +38,7 @@
 #include <iostream>
 #include <fstream>
 
-#include "bmpLoader.hpp"  // Header file for Bitmap image
+//#include "bmpLoader.hpp"  // Header file for Bitmap image
 
 #ifndef _WIN32
 #include <GL/glx.h>

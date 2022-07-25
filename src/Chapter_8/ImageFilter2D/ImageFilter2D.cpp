@@ -447,3 +447,8 @@ int main(int argc, char** argv)
     Cleanup(context, commandQueue, program, kernel, imageObjects, sampler);
     return 0;
 }
+
+
+//  /media/kent/SoftArchHgst1T/images__street/3.jfif    /media/kent/SoftArchHgst1T/images__street/3.jfif.oclFilterd.png
+
+//  /media/kent/SoftArchHgst1T/images__street/2_10.jpg   /media/kent/SoftArchHgst1T/images__street/2_10.jpg.oclFilterd.png
