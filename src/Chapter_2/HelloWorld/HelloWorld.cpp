@@ -178,7 +178,7 @@ cl_program CreateProgram(cl_context context, cl_device_id device, const char* fi
 //  and b (input)
 //
 bool CreateMemObjects(cl_context context, cl_mem memObjects[3],
-                      float *a, float *b)
+float *a, float *b)
 {
     memObjects[0] = clCreateBuffer(context, CL_MEM_READ_ONLY | CL_MEM_COPY_HOST_PTR,
                                    sizeof(float) * ARRAY_SIZE, a, NULL);
@@ -313,8 +313,8 @@ int main(int argc, char** argv)
 
     // Read the output buffer back to the Host
     errNum = clEnqueueReadBuffer(commandQueue, memObjects[2], CL_TRUE,
-                                 0, ARRAY_SIZE * sizeof(float), result,
-                                 0, NULL, NULL);
+            0, ARRAY_SIZE * sizeof(float), result,
+            0, NULL, NULL);
     if (errNum != CL_SUCCESS)
     {
         std::cerr << "Error reading result buffer." << std::endl;

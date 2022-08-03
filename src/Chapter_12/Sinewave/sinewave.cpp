@@ -213,7 +213,10 @@ void runCL()
 
     queue.enqueueAcquireGLObjects(&v);
 
+//    kernel.setArg(    );
+
     cl::KernelFunctor func = kernel.bind(
+//       cl::  detail:: KernelFunctorGlobal func = kernel.bind(
         queue,
         cl::NDRange(meshWidth, meshHeight),
         cl::NDRange(local_work_size[0], local_work_size[1]));

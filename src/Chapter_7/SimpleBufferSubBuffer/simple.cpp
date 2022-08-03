@@ -373,8 +373,6 @@ int main(int argc, char** argv)
 
         std::cout << std::endl;
     }
-
     std::cout << "Program completed successfully" << std::endl;
-
     return 0;
 }
