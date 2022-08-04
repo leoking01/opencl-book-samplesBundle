@@ -9,7 +9,16 @@
 # FREEIMAGE_LIBRARY
 #
 
+set(FREEIMAGE_FOUND true  )
+set(FREEIMAGE_INCLUDE_PATH  "D:/win10/FreeImage3180Win32Win64/FreeImage/Dist/x64"  )
+set(FREEIMAGE_LIBRARY  "D:/win10/FreeImage3180Win32Win64/FreeImage/Dist/x64/FreeImage.lib"  )
+
+set(WIN32  true)
+
+
 IF (WIN32)
+message(STATUS   "--------------->   chapter8.  this is WIN32.")
+
 	FIND_PATH( FREEIMAGE_INCLUDE_PATH FreeImage.h
 		${PROJECT_SOURCE_DIR}/extern/FreeImage
 		DOC "The directory where FreeImage.h resides")
@@ -55,7 +64,7 @@ MARK_AS_ADVANCED(
 IF (FREEIMAGE_INCLUDE_PATH AND FREEIMAGE_LIBRARY)
     INCLUDE_DIRECTORIES(${FREEIMAGE_INCLUDE_PATH})
 
-    add_executable( ImageFilter2D ImageFilter2D.cpp )
+    add_executable( ImageFilter2D ImageFilter2D.cpp ImageFilter2D.cl)
     target_link_libraries( ImageFilter2D ${OPENCL_LIBRARIES} ${FREEIMAGE_LIBRARIES} )
     
     configure_file(ImageFilter2D.cl ${CMAKE_CURRENT_BINARY_DIR}/ImageFilter2D.cl COPYONLY)

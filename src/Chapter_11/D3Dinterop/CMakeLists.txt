@@ -10,7 +10,7 @@ include_directories( "C:/Program\ Files\ (x86)/Microsoft\ DirectX\ SDK\ \(June 2
 
 
 IF (D3DX10_LIBRARY AND D3DX10_LIBRARY)
-	add_executable( D3Dinterop D3Dinterop.cpp )
+        add_executable( D3Dinterop D3Dinterop.cpp D3Dinterop.cl)
 	include_directories( ${DX10_INCLUDE_PATH})
 
         link_directories("C:/Program\ Files\ \(x86\)/Microsoft\ DirectX\ SDK\ \(June 2010\)/Lib/x64" )

@@ -336,6 +336,10 @@ int main(int argc, char** argv)
         return 1;
     }
 
+    std::cout << "width = " << width<< std::endl;
+    std::cout << "height = " << height<< std::endl;
+
+
     // Create ouput image object
     cl_image_format clImageFormat;
     clImageFormat.image_channel_order = CL_RGBA;
@@ -452,3 +456,13 @@ int main(int argc, char** argv)
 //  /media/kent/SoftArchHgst1T/images__street/3.jfif    /media/kent/SoftArchHgst1T/images__street/3.jfif.oclFilterd.png
 
 //  /media/kent/SoftArchHgst1T/images__street/2_10.jpg   /media/kent/SoftArchHgst1T/images__street/2_10.jpg.oclFilterd.png
+
+
+
+
+//     E:/images__street/6.jpeg    E:/images__street/6.out.png
+
+//     E:/images__street/6g.bmp    E:/images__street/6g.out.bmp
+
+//     E:/images__street/e.bmp    E:/images__street/e.out.bmp
+//     E:/images__street/6.bmp    E:/images__street/6.out.bmp

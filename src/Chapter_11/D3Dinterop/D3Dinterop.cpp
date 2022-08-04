@@ -731,7 +731,5 @@ void Cleanup()
 	if( g_pSwapChain != NULL ) g_pSwapChain->Release();
 	if( g_pVertexBuffer != NULL ) g_pVertexBuffer->Release();
 	if( g_pD3DDevice != NULL ) g_pD3DDevice->Release();
-
-
 	exit(0);
 }
