@@ -5,6 +5,7 @@ SUBDIRS(
 	Chapter_6/HelloBinaryWorld 
 	Chapter_7/SimpleBufferSubBuffer
 	Chapter_8/ImageFilter2D 
+        Chapter_8/ImageFilter2Dcv
 	Chapter_12/VectorAdd
 	Chapter_14/histogram 
 	Chapter_16/Dijkstra

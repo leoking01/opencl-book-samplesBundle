@@ -24,7 +24,7 @@ __kernel void gaussian_filter(__read_only image2d_t srcImg,
         {
             for( int x = startImageCoord.x; x <= endImageCoord.x; x++)
             {
-                outColor += (read_imagef(srcImg, sampler, (int2)(x, y)) * (kernelWeights[weight] / 16.0f) );
+                outColor += (  read_imagef(srcImg, sampler, (int2)(x, y)  ) * (kernelWeights[weight] / 16.0f)  );
                 weight += 1;
             }
         }

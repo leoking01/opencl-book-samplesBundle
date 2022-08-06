@@ -29,7 +29,7 @@
 
 //#include <windows.h>
 //#include<minwindef.h>
-#include "FreeImage.h"
+//#include "FreeImage.h"
 
 #ifdef  ANDROID_ARM_NEON
 #include <arm_neon.h>
@@ -59,6 +59,8 @@
 //#ifdef __cplusplus
 //   }
 //#endif
+
+#include <opencv2/opencv.hpp>
 
 class   TimeRecorder {
 public:
@@ -106,6 +108,50 @@ public:
 #include <sys/time.h>
 #include <unistd.h>
 #endif  // _WIND32
+
+
+
+////
+//#if ( defined(_WIN32) && !defined(CYGWIN) )
+//typedef __int64 int64_t;
+//#else
+//typedef long long int64t;
+//#endif  // _WIN32
+
+//typedef __int64 int64_t;
+
+
+//#ifdef __cplusplus
+//extern "C"{
+//#endif
+//// 获取系统的当前时间，单位微秒(us)
+//int64_t GetSysTimeMicros()
+//{
+//#ifdef _WIN32
+//// 从1601年1月1日0:0:0:000到1970年1月1日0:0:0:000的时间(单位100ns)
+//#define EPOCHFILETIME   (116444736000000000UL)
+//    FILETIME ft;
+//    LARGE_INTEGER li;
+//    int64_t tt = 0;
+//    GetSystemTimeAsFileTime(&ft);
+//    li.LowPart = ft.dwLowDateTime;
+//    li.HighPart = ft.dwHighDateTime;
+//    // 从1970年1月1日0:0:0:000到现在的微秒数(UTC时间)
+//    tt = (li.QuadPart - EPOCHFILETIME) /10;
+//    return tt;
+//#else
+//    timeval tv;
+//    gettimeofday(&tv, 0);
+//    return (int64_t)tv.tv_sec * 1000000 + (int64_t)tv.tv_usec;
+//#endif // _WIN32
+//    return 0;
+//}
+//#ifdef __cplusplus
+//   }
+//#endif
+
+
+
 
 
 ///
@@ -281,12 +327,15 @@ cl_sampler sampler)
 }
 
 
+#include <opencv2/opencv.hpp>
+
 ///
 //  Load an image using the FreeImage library and create an OpenCL
 //  image out of it
 //
 cl_mem LoadImage(cl_context context, char *fileName, int &width, int &height)
 {
+#if  0
     FREE_IMAGE_FORMAT format = FreeImage_GetFileType(fileName, 0);
     FIBITMAP* image = FreeImage_Load(format, fileName);
 
@@ -297,13 +346,19 @@ cl_mem LoadImage(cl_context context, char *fileName, int &width, int &height)
 
     width = FreeImage_GetWidth(image);
     height = FreeImage_GetHeight(image);
-
-//
-
+#endif
+    cv::Mat    img = cv::imread( fileName,  1 );
+    cv::Mat  imgrgba ;
+    cv::cvtColor( img, imgrgba, cv::COLOR_RGB2RGBA);
+    img = imgrgba;
+    width = img.cols;
+    height = img.rows;
     char *buffer = new char[width * height * 4];
+#if  0
     memcpy(buffer, FreeImage_GetBits(image), width * height * 4);
-
     FreeImage_Unload(image);
+#endif
+    memcpy(buffer,  (img.data), width * height * 4);
 
     // Create OpenCL image
     cl_image_format clImageFormat;
@@ -335,11 +390,17 @@ cl_mem LoadImage(cl_context context, char *fileName, int &width, int &height)
 //
 bool SaveImage(char *fileName, char *buffer, int width, int height)
 {
+#if  0
     FREE_IMAGE_FORMAT format = FreeImage_GetFIFFromFilename(fileName);
     FIBITMAP *image = FreeImage_ConvertFromRawBits((BYTE*)buffer, width,
                                                    height, width * 4, 32,
                                                    0xFF000000, 0x00FF0000, 0x0000FF00);
     return (FreeImage_Save(format, image, fileName) == TRUE) ? true : false;
+    #endif
+    cv::Mat  img(height,width, CV_8UC4 );
+    img.data = (uchar*)buffer;
+    cv::imwrite(fileName,img  );
+    return  true;
 }
 
 ///
@@ -458,7 +519,7 @@ int main(int argc, char** argv)
     }
 
     // Create OpenCL program
-    program = CreateProgram(context, device, "ImageFilter2D.cl");
+    program = CreateProgram(context, device, "ImageFilter2Dcv.cl");
     if (program == NULL)
     {
         Cleanup(context, commandQueue, program, kernel, imageObjects, sampler);
@@ -512,7 +573,7 @@ int main(int argc, char** argv)
         tr.reset();
         // free image  proc
 
-         std::cout << " tr.recordTime() = " << tr.recordTime()<< " ms 毫秒.  "<< std::endl;
+        std::cout << " tr.recordTime() = " << tr.recordTime()<< " ms 毫秒.  "<< std::endl;
     }
 
 
@@ -520,7 +581,7 @@ int main(int argc, char** argv)
     // Read the output buffer back to the Host
     char *buffer = new char [width * height * 4];
     size_t origin[3] = { 0, 0, 0 };
-    size_t region[3] = { width, height, 1};
+    size_t region[3] = { (size_t)width, (size_t)height, 1};
     errNum = clEnqueueReadImage(commandQueue, imageObjects[1], CL_TRUE,
             origin, region, 0, 0, buffer,
             0, NULL, NULL);
