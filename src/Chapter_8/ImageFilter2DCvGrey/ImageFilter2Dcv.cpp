@@ -400,6 +400,8 @@ bool SaveImage(char *fileName, char *buffer, int width, int height)
     cv::Mat  img(height,width, CV_8UC4 );
     img.data = (uchar*)buffer;
     cv::imwrite(fileName,img  );
+    cv::imshow( "img", img );
+    cv::waitKey();
     return  true;
 }
 
@@ -433,11 +435,18 @@ int main(int argc, char** argv)
     cl_sampler sampler = 0;
     cl_int errNum;
 
+    argc = 3;
+//    argv = {"exe","e9.jpeg", "e9.out.jpeg"};
+    argv[0] = "exe" ;
+//    argv[1] = "e9.jpeg" ;
+//    argv[2] = "e9.out.jpeg" ;
+    argv[1] = "23.jfif" ;
+    argv[2] = "23.out.png" ;
 
     if (argc != 3)
     {
         std::cerr << "USAGE: " << argv[0] << " <inputImageFile> <outputImageFiles>" << std::endl;
-        return 1;
+//        return 1;
     }
 
     // Create an OpenCL context on first available platform
@@ -572,7 +581,6 @@ int main(int argc, char** argv)
     {
         tr.reset();
         // free image  proc
-
         std::cout << " tr.recordTime() = " << tr.recordTime()<< " ms 毫秒.  "<< std::endl;
     }
 

@@ -47,7 +47,7 @@ const unsigned int    g_WindowHeight = 256;
 // Global D3D device/context/feature pointers
 ID3D10Device *g_pD3DDevice;
 IDXGISwapChain *g_pSwapChain;
-D3D_FEATURE_LEVEL g_D3DFeatureLevel;
+//D3D_FEATURE_LEVEL g_D3DFeatureLevel;
 ID3D10RenderTargetView *g_pRenderTargetView;
 
 // stuff for rendering a triangle, the vertex shader, the vertex buffer, and the input layout structure.

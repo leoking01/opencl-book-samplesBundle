@@ -5,16 +5,27 @@ FIND_PACKAGE(DirectX)
 add_definitions(-DUNICODE -D_UNICODE)
 link_directories(${CMAKE_LIBRARY_PATH})
 
-
-include_directories( "C:/Program\ Files\ (x86)/Microsoft\ DirectX\ SDK\ \(June 2010\)/Include"  )
+#C:\Program Files (x86)\Microsoft DirectX SDK (February 2010)\Lib\x64\d3dx10.lib
+include_directories(
+    "C:/Program\ Files\ (x86)/Microsoft\ DirectX\ SDK\ \(June 2010\)/Include"
+    "C:/Program\ Files\ (x86)/Microsoft\ DirectX\ SDK\ \(February 2010\)/Include"
+    )
 
 
 IF (D3DX10_LIBRARY AND D3DX10_LIBRARY)
         add_executable( D3Dinterop D3Dinterop.cpp D3Dinterop.cl)
-	include_directories( ${DX10_INCLUDE_PATH})
+        include_directories( ${DX10_INCLUDE_PATH}
+             "C:/Program\ Files\ \(x86\)/Microsoft\ DirectX\ SDK\ \(February 2010\)/include"
 
-        link_directories("C:/Program\ Files\ \(x86\)/Microsoft\ DirectX\ SDK\ \(June 2010\)/Lib/x64" )
-        set(D3DX10_LIBRARY  "C:/Program\ Files\ \(x86\)/Microsoft\ DirectX\ SDK\ \(June 2010\)/Lib/x64/d3dx10.lib"  )
+            )
+
+        link_directories(
+            "C:/Program\ Files\ \(x86\)/Microsoft\ DirectX\ SDK\ \(June 2010\)/Lib/x64"
+            "C:/Program\ Files\ \(x86\)/Microsoft\ DirectX\ SDK\ \(February 2010\)/Lib/x64"
+            )
+#        set(D3DX10_LIBRARY  "C:/Program\ Files\ \(x86\)/Microsoft\ DirectX\ SDK\ \(June 2010\)/Lib/x64/d3dx10.lib"  )
+#set(D3DX10_LIBRARY  d3dx10  )
+  set(D3DX10_LIBRARY  "C:/Program\ Files\ \(x86\)/Microsoft\ DirectX\ SDK\ \(February 2010\)/Lib/x64/d3dx10.lib"  )
         message( WARNING  "{D3DX10_LIBRARY} = ${D3DX10_LIBRARY}"  )
 
 
