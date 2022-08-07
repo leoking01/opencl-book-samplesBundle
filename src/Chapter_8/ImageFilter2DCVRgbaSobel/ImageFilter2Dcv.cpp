@@ -52,6 +52,14 @@
 #include <stdio.h>
 #include <math.h>
 
+//#ifdef __cplusplus
+//extern "C"{
+//#endif
+//int64_t    GetSysTimeMicros();
+//#ifdef __cplusplus
+//   }
+//#endif
+
 #include <opencv2/opencv.hpp>
 
 class   TimeRecorder {
@@ -65,6 +73,10 @@ public:
     //  单位 微秒
     double recordTime() {
         end = std::clock(); //程序结束用时
+        //         end = (clock_t)GetSysTimeMicros();// 微秒
+        //        end = (clock_t)GetSysTimeMicros();//
+        //        double endtime = (double) (end - start) / CLOCKS_PER_SEC;
+        //         double endtime = (double) (end - start) ;// 微秒 CLOCKS_PER_SEC;
         double endtime = (double) (end - start)/1000.0 ;// mili second CLOCKS_PER_SEC;
         return endtime ;//* 1000.0;//* 1000;
     }
@@ -76,6 +88,7 @@ public:
         //         double endtime = (double) (end - start) ;/// CLOCKS_PER_SEC;
         return endtime * 1000.0;//* 1000;
     }
+
     void reset() {
         start = std::clock();
         //        start = (clock_t)GetSysTimeMicros();
@@ -95,6 +108,51 @@ public:
 #include <sys/time.h>
 #include <unistd.h>
 #endif  // _WIND32
+
+
+
+////
+//#if ( defined(_WIN32) && !defined(CYGWIN) )
+//typedef __int64 int64_t;
+//#else
+//typedef long long int64t;
+//#endif  // _WIN32
+
+//typedef __int64 int64_t;
+
+
+//#ifdef __cplusplus
+//extern "C"{
+//#endif
+//// 获取系统的当前时间，单位微秒(us)
+//int64_t GetSysTimeMicros()
+//{
+//#ifdef _WIN32
+//// 从1601年1月1日0:0:0:000到1970年1月1日0:0:0:000的时间(单位100ns)
+//#define EPOCHFILETIME   (116444736000000000UL)
+//    FILETIME ft;
+//    LARGE_INTEGER li;
+//    int64_t tt = 0;
+//    GetSystemTimeAsFileTime(&ft);
+//    li.LowPart = ft.dwLowDateTime;
+//    li.HighPart = ft.dwHighDateTime;
+//    // 从1970年1月1日0:0:0:000到现在的微秒数(UTC时间)
+//    tt = (li.QuadPart - EPOCHFILETIME) /10;
+//    return tt;
+//#else
+//    timeval tv;
+//    gettimeofday(&tv, 0);
+//    return (int64_t)tv.tv_sec * 1000000 + (int64_t)tv.tv_usec;
+//#endif // _WIN32
+//    return 0;
+//}
+//#ifdef __cplusplus
+//   }
+//#endif
+
+
+
+
 
 ///
 //  Create an OpenCL context on the first available platform using
@@ -139,6 +197,7 @@ cl_context CreateContext()
             return NULL;
         }
     }
+
     return context;
 }
 
@@ -289,52 +348,44 @@ cl_mem LoadImage(cl_context context, char *fileName, int &width, int &height)
     height = FreeImage_GetHeight(image);
 #endif
     cv::Mat    img = cv::imread( fileName,  1 );
-    cv::imshow( "img-input", img );
-    //    cv::waitKey(0 );
-
     cv::Mat  imgrgba ;
-    //    cv::cvtColor( img, imgrgba, cv::COLOR_RGB2RGBA);
-    cv::cvtColor(img, imgrgba,cv::COLOR_BGR2BGR555);
+    cv::cvtColor( img, imgrgba, cv::COLOR_RGB2RGBA);
     img = imgrgba;
-    int chans = img.channels();
-    std::cout<< "chans = "<<chans << std::endl;
 
-
-    cv::FileStorage fs("in.yml",  cv::FileStorage::WRITE);
-    fs<< "imgrgba" << imgrgba ;
-    fs.release();
-
+    cv::imshow( "img-input", img );
 
     width = img.cols;
     height = img.rows;
-    char *buffer = new char[width * height * chans];
+    char *buffer = new char[width * height * 4];
 #if  0
-    memcpy(buffer, FreeImage_GetBits(image), width * height * chans);
+    memcpy(buffer, FreeImage_GetBits(image), width * height * 4);
     FreeImage_Unload(image);
 #endif
-    memcpy(buffer,  (img.data), width * height * chans);
+    memcpy(buffer,  (img.data), width * height * 4);
 
     // Create OpenCL image
     cl_image_format clImageFormat;
-    //    clImageFormat.image_channel_order = CL_RGBA;
-    clImageFormat.image_channel_order = CL_RGB ;
-    clImageFormat.image_channel_data_type = CL_UNORM_SHORT_555;//CL_UNORM_INT_101010;// CL_UNORM_SHORT_565;//CL_UNORM_INT8;
+    clImageFormat.image_channel_order = CL_RGBA;
+    clImageFormat.image_channel_data_type = CL_UNORM_INT8;
 
     cl_int errNum;
     cl_mem clImage;
     clImage = clCreateImage2D(
                 context,
-                CL_MEM_READ_ONLY | CL_MEM_COPY_HOST_PTR,
-                &clImageFormat,
-                width,
-                height,
-                0,
-                buffer,
-                &errNum);
-    if (errNum != CL_SUCCESS){
+                              CL_MEM_READ_ONLY | CL_MEM_COPY_HOST_PTR,
+                              &clImageFormat,
+                              width,
+                              height,
+                              0,
+                              buffer,
+                              &errNum);
+
+    if (errNum != CL_SUCCESS)
+    {
         std::cerr << "Error creating CL image object" << std::endl;
         return 0;
     }
+
     return clImage;
 }
 
@@ -349,22 +400,11 @@ bool SaveImage(char *fileName, char *buffer, int width, int height)
                                                    height, width * 4, 32,
                                                    0xFF000000, 0x00FF0000, 0x0000FF00);
     return (FreeImage_Save(format, image, fileName) == TRUE) ? true : false;
-#endif
-    //    cv::Mat  img(height,width, CV_8UC4 );
-    cv::Mat  img(height,width, CV_8UC3,cv::Scalar(0,0,0) );
-    cv::Mat imgrgba;
-    cv::cvtColor(img, imgrgba,cv::COLOR_BGR2BGR555);
-
-    //    imgrgba.data = (uchar*)buffer;
-    memcpy(imgrgba.data, buffer, height* width* imgrgba.channels()  );
-
-    cv::FileStorage fs("out.yml",  cv::FileStorage::WRITE);
-    fs<< "imgrgba" << imgrgba ;
-    fs.release();
-
-    cv::cvtColor(imgrgba,img  ,cv::COLOR_BGR5552BGR);
+    #endif
+    cv::Mat  img(height,width, CV_8UC4 );
+    img.data = (uchar*)buffer;
     cv::imwrite(fileName,img  );
-    cv::imshow( "img", img*255 );
+    cv::imshow( "img", img );
     cv::waitKey();
     return  true;
 }
@@ -400,17 +440,15 @@ int main(int argc, char** argv)
     cl_int errNum;
 
     argc = 3;
-    //    argv = {"exe","e9.jpeg", "e9.out.jpeg"};
+//    argv = {"exe","23.jfif", "23.out.jfif"};
     argv[0] = "exe" ;
-    //    argv[1] = "e9.jpeg" ;
-    //    argv[2] = "e9.out.jpeg" ;
     argv[1] = "23.jfif" ;
     argv[2] = "23.out.png" ;
 
     if (argc != 3)
     {
         std::cerr << "USAGE: " << argv[0] << " <inputImageFile> <outputImageFiles>" << std::endl;
-        //        return 1;
+//        return 1;
     }
 
     // Create an OpenCL context on first available platform
@@ -458,18 +496,17 @@ int main(int argc, char** argv)
 
     // Create ouput image object
     cl_image_format clImageFormat;
-    //    clImageFormat.image_channel_order = CL_RGBA;
-    clImageFormat.image_channel_order = CL_RGB ;
-    clImageFormat.image_channel_data_type = CL_UNORM_SHORT_555;//CL_UNORM_INT_101010;// CL_UNORM_SHORT_565;//CL_UNORM_INT8;
-    imageObjects[1] = clCreateImage2D(
-                context,
-                CL_MEM_WRITE_ONLY,
-                &clImageFormat,
-                width,
-                height,
-                0,
-                NULL,
-                &errNum);
+    clImageFormat.image_channel_order = CL_RGBA;
+    clImageFormat.image_channel_data_type = CL_UNORM_INT8;
+    imageObjects[1] = clCreateImage2D(context,
+                                      CL_MEM_WRITE_ONLY,
+                                      &clImageFormat,
+                                      width,
+                                      height,
+                                      0,
+                                      NULL,
+                                      &errNum);
+
     if (errNum != CL_SUCCESS)
     {
         std::cerr << "Error creating CL output image object." << std::endl;
@@ -479,13 +516,12 @@ int main(int argc, char** argv)
 
 
     // Create sampler for sampling image object
-    sampler = clCreateSampler(
-                context,
-                  CL_FALSE, // Non-normalized coordinates
-//                CL_TRUE ,
-                CL_ADDRESS_CLAMP_TO_EDGE,
-                CL_FILTER_NEAREST,
-                &errNum);
+    sampler = clCreateSampler(context,
+                              CL_FALSE, // Non-normalized coordinates
+                              CL_ADDRESS_CLAMP_TO_EDGE,
+                              CL_FILTER_NEAREST,
+                              &errNum);
+
     if (errNum != CL_SUCCESS)
     {
         std::cerr << "Error creating CL sampler object." << std::endl;
@@ -523,14 +559,9 @@ int main(int argc, char** argv)
         return 1;
     }
 
-//    size_t localWorkSize[2] = { 16, 16 };
-//    size_t globalWorkSize[2] =  { RoundUp(localWorkSize[0], width),
-//                                  RoundUp(localWorkSize[1], height) };
-
-    size_t localWorkSize[2] = { 4, 4 };
-    size_t globalWorkSize[2] =  { width,
-                                  height };
-
+    size_t localWorkSize[2] = { 16, 16 };
+    size_t globalWorkSize[2] =  { RoundUp(localWorkSize[0], width),
+                                  RoundUp(localWorkSize[1], height) };
 
     TimeRecorder   tr;
     // Queue the kernel up for execution
@@ -539,10 +570,9 @@ int main(int argc, char** argv)
                 globalWorkSize, localWorkSize,
                 0, NULL, NULL
                 );
-     std::cerr << "执行结果，errNum = " <<errNum<<  std::endl;
     if (errNum != CL_SUCCESS)
     {
-        std::cerr << "Error queuing kernel for execution.errNum= " <<errNum<<  std::endl;
+        std::cerr << "Error queuing kernel for execution." << std::endl;
         Cleanup(context, commandQueue, program, kernel, imageObjects, sampler);
         return 1;
     }
@@ -556,15 +586,13 @@ int main(int argc, char** argv)
         std::cout << " tr.recordTime() = " << tr.recordTime()<< " ms 毫秒.  "<< std::endl;
     }
 
-// bgr555
-int chans = 2  ;//4;
+
+
     // Read the output buffer back to the Host
-    char *buffer = new char [width * height * chans];
+    char *buffer = new char [width * height * 4];
     size_t origin[3] = { 0, 0, 0 };
-//    size_t region[3] = { (size_t)width, (size_t)height, 1};
-    size_t region[3] = { (size_t)width , (size_t)height,  1 };
-    errNum = clEnqueueReadImage(
-                commandQueue, imageObjects[1], CL_TRUE,
+    size_t region[3] = { (size_t)width, (size_t)height, 1};
+    errNum = clEnqueueReadImage(commandQueue, imageObjects[1], CL_TRUE,
             origin, region, 0, 0, buffer,
             0, NULL, NULL);
     if (errNum != CL_SUCCESS)
@@ -596,6 +624,7 @@ int chans = 2  ;//4;
 //  /media/kent/SoftArchHgst1T/images__street/3.jfif    /media/kent/SoftArchHgst1T/images__street/3.jfif.oclFilterd.png
 
 //  /media/kent/SoftArchHgst1T/images__street/2_10.jpg   /media/kent/SoftArchHgst1T/images__street/2_10.jpg.oclFilterd.png
+
 
 //     E:/images__street/6.jpeg    E:/images__street/6.out.png
 

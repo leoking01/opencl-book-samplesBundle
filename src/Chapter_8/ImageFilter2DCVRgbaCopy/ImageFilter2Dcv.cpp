@@ -351,6 +351,9 @@ cl_mem LoadImage(cl_context context, char *fileName, int &width, int &height)
     cv::Mat  imgrgba ;
     cv::cvtColor( img, imgrgba, cv::COLOR_RGB2RGBA);
     img = imgrgba;
+
+    cv::imshow( "img-input", img );
+
     width = img.cols;
     height = img.rows;
     char *buffer = new char[width * height * 4];
@@ -367,7 +370,8 @@ cl_mem LoadImage(cl_context context, char *fileName, int &width, int &height)
 
     cl_int errNum;
     cl_mem clImage;
-    clImage = clCreateImage2D(context,
+    clImage = clCreateImage2D(
+                context,
                               CL_MEM_READ_ONLY | CL_MEM_COPY_HOST_PTR,
                               &clImageFormat,
                               width,
@@ -436,10 +440,10 @@ int main(int argc, char** argv)
     cl_int errNum;
 
     argc = 3;
-//    argv = {"exe","e9.jpeg", "e9.out.jpeg"};
+//    argv = {"exe","23.jfif", "23.out.jfif"};
     argv[0] = "exe" ;
-    argv[1] = "e9.jpeg" ;
-    argv[2] = "e9.out.jpeg" ;
+    argv[1] = "23.jfif" ;
+    argv[2] = "23.out.png" ;
 
     if (argc != 3)
     {
