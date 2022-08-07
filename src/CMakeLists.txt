@@ -8,6 +8,15 @@ SUBDIRS(
         Chapter_8/ImageFilter2DCVRgba
         Chapter_8/ImageFilter2DCVRgb
         Chapter_8/ImageFilter2DCvGrey
+        Chapter_8/ImageFilter2DCVRgbaMedian
+        Chapter_8/ImageFilter2DCVRgbaMid
+        Chapter_8/ImageFilter2DCVRgbaCopy
+        Chapter_8/ImageFilter2DCVRgbaReverse
+        Chapter_8/ImageFilter2DCVRgbaSobel
+        Chapter_8/ImageFilter2DCVRgbaLaplace
+        Chapter_8/ImageFilter2DCVRgbaLaplaceX
+         Chapter_8/Ch8RgbCopyRgb
+           Chapter_8/Ch8Rgb2Rgba
 	Chapter_12/VectorAdd
 	Chapter_14/histogram 
 	Chapter_16/Dijkstra

@@ -599,8 +599,11 @@ int main(int argc, char** argv)
     char *buffer = new char [width * height * 4];
     size_t origin[3] = { 0, 0, 0 };
     size_t region[3] = { (size_t)width, (size_t)height, 1};
-    errNum = clEnqueueReadImage(commandQueue, imageObjects[1], CL_TRUE,
-            origin, region, 0, 0, buffer,
+    errNum = clEnqueueReadImage(
+                commandQueue, imageObjects[1]
+//            , CL_TRUE
+            , CL_FALSE
+            ,   origin, region, 0, 0, buffer,
             0, NULL, NULL);
     if (errNum != CL_SUCCESS)
     {

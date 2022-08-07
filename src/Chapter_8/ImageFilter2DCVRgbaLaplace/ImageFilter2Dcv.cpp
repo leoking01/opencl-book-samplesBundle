@@ -52,6 +52,14 @@
 #include <stdio.h>
 #include <math.h>
 
+//#ifdef __cplusplus
+//extern "C"{
+//#endif
+//int64_t    GetSysTimeMicros();
+//#ifdef __cplusplus
+//   }
+//#endif
+
 #include <opencv2/opencv.hpp>
 
 class   TimeRecorder {
@@ -100,6 +108,51 @@ public:
 #include <sys/time.h>
 #include <unistd.h>
 #endif  // _WIND32
+
+
+
+////
+//#if ( defined(_WIN32) && !defined(CYGWIN) )
+//typedef __int64 int64_t;
+//#else
+//typedef long long int64t;
+//#endif  // _WIN32
+
+//typedef __int64 int64_t;
+
+
+//#ifdef __cplusplus
+//extern "C"{
+//#endif
+//// 获取系统的当前时间，单位微秒(us)
+//int64_t GetSysTimeMicros()
+//{
+//#ifdef _WIN32
+//// 从1601年1月1日0:0:0:000到1970年1月1日0:0:0:000的时间(单位100ns)
+//#define EPOCHFILETIME   (116444736000000000UL)
+//    FILETIME ft;
+//    LARGE_INTEGER li;
+//    int64_t tt = 0;
+//    GetSystemTimeAsFileTime(&ft);
+//    li.LowPart = ft.dwLowDateTime;
+//    li.HighPart = ft.dwHighDateTime;
+//    // 从1970年1月1日0:0:0:000到现在的微秒数(UTC时间)
+//    tt = (li.QuadPart - EPOCHFILETIME) /10;
+//    return tt;
+//#else
+//    timeval tv;
+//    gettimeofday(&tv, 0);
+//    return (int64_t)tv.tv_sec * 1000000 + (int64_t)tv.tv_usec;
+//#endif // _WIN32
+//    return 0;
+//}
+//#ifdef __cplusplus
+//   }
+//#endif
+
+
+
+
 
 ///
 //  Create an OpenCL context on the first available platform using
@@ -249,20 +302,28 @@ cl_program CreateProgram(cl_context context, cl_device_id device, const char* fi
 //
 void Cleanup(cl_context context, cl_command_queue commandQueue,
              cl_program program, cl_kernel kernel, cl_mem imageObjects[2],
-cl_sampler sampler){
-    for (int i = 0; i < 2; i++)    {
+cl_sampler sampler)
+{
+    for (int i = 0; i < 2; i++)
+    {
         if (imageObjects[i] != 0)
             clReleaseMemObject(imageObjects[i]);
     }
-    if (commandQueue != 0) clReleaseCommandQueue(commandQueue);
+    if (commandQueue != 0)
+        clReleaseCommandQueue(commandQueue);
 
-    if (kernel != 0)clReleaseKernel(kernel);
+    if (kernel != 0)
+        clReleaseKernel(kernel);
 
-    if (program != 0) clReleaseProgram(program);
+    if (program != 0)
+        clReleaseProgram(program);
 
-    if (sampler != 0) clReleaseSampler(sampler);
+    if (sampler != 0)
+        clReleaseSampler(sampler);
 
-    if (context != 0) clReleaseContext(context);
+    if (context != 0)
+        clReleaseContext(context);
+
 }
 
 
@@ -318,11 +379,13 @@ cl_mem LoadImage(cl_context context, char *fileName, int &width, int &height)
                               0,
                               buffer,
                               &errNum);
+
     if (errNum != CL_SUCCESS)
     {
         std::cerr << "Error creating CL image object" << std::endl;
         return 0;
     }
+
     return clImage;
 }
 

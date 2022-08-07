@@ -13,9 +13,9 @@ __kernel void gaussian_filter(__read_only image2d_t srcImg,
 //    float kernelWeights[9] = { 1.0f, 2.0f, 1.0f,
 //                               2.0f, 4.0f, 2.0f,
 //                               1.0f, 2.0f, 1.0f };
-    float kernelWeights[9] = { 1.0f, 1.0f, 1.0f,
-                               1.0f, 1.0f, 1.0f,
-                               1.0f, 1.0f, 1.0f };
+    float kernelWeights[9] = { -1.0f, -2.0f, -1.0f,
+                               -2.0f, 12.0f, -2.0f,
+                               -1.0f, -2.0f, -1.0f };
     int2 startImageCoord = (int2) (get_global_id(0) - 1, get_global_id(1) - 1);
     int2 endImageCoord   = (int2) (get_global_id(0) + 1, get_global_id(1) + 1);
     int2 outImageCoord   = (int2) (get_global_id(0)    , get_global_id(1) );
@@ -27,7 +27,7 @@ __kernel void gaussian_filter(__read_only image2d_t srcImg,
         {
             for( int x = startImageCoord.x; x <= endImageCoord.x; x++)
             {
-                outColor += (  read_imagef(srcImg, sampler, (int2)(x, y)  ) * (kernelWeights[weight] / 9.0f)  );
+                outColor += (  read_imagef(srcImg, sampler, (int2)(x, y)  ) * (kernelWeights[weight] / 1.0f)  );
                 weight += 1;
             }
         }

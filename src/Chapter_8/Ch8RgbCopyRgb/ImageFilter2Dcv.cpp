@@ -65,10 +65,6 @@ public:
     //  单位 微秒
     double recordTime() {
         end = std::clock(); //程序结束用时
-        //         end = (clock_t)GetSysTimeMicros();// 微秒
-        //        end = (clock_t)GetSysTimeMicros();//
-        //        double endtime = (double) (end - start) / CLOCKS_PER_SEC;
-        //         double endtime = (double) (end - start) ;// 微秒 CLOCKS_PER_SEC;
         double endtime = (double) (end - start)/1000.0 ;// mili second CLOCKS_PER_SEC;
         return endtime ;//* 1000.0;//* 1000;
     }
@@ -80,7 +76,6 @@ public:
         //         double endtime = (double) (end - start) ;/// CLOCKS_PER_SEC;
         return endtime * 1000.0;//* 1000;
     }
-
     void reset() {
         start = std::clock();
         //        start = (clock_t)GetSysTimeMicros();
@@ -144,7 +139,6 @@ cl_context CreateContext()
             return NULL;
         }
     }
-
     return context;
 }
 
@@ -249,20 +243,28 @@ cl_program CreateProgram(cl_context context, cl_device_id device, const char* fi
 //
 void Cleanup(cl_context context, cl_command_queue commandQueue,
              cl_program program, cl_kernel kernel, cl_mem imageObjects[2],
-cl_sampler sampler){
-    for (int i = 0; i < 2; i++)    {
+cl_sampler sampler)
+{
+    for (int i = 0; i < 2; i++)
+    {
         if (imageObjects[i] != 0)
             clReleaseMemObject(imageObjects[i]);
     }
-    if (commandQueue != 0) clReleaseCommandQueue(commandQueue);
+    if (commandQueue != 0)
+        clReleaseCommandQueue(commandQueue);
 
-    if (kernel != 0)clReleaseKernel(kernel);
+    if (kernel != 0)
+        clReleaseKernel(kernel);
 
-    if (program != 0) clReleaseProgram(program);
+    if (program != 0)
+        clReleaseProgram(program);
 
-    if (sampler != 0) clReleaseSampler(sampler);
+    if (sampler != 0)
+        clReleaseSampler(sampler);
 
-    if (context != 0) clReleaseContext(context);
+    if (context != 0)
+        clReleaseContext(context);
+
 }
 
 
@@ -272,7 +274,7 @@ cl_sampler sampler){
 //  Load an image using the FreeImage library and create an OpenCL
 //  image out of it
 //
-cl_mem LoadImage(cl_context context, char *fileName, int &width, int &height)
+cl_mem LoadImage_local(cl_context context, char *fileName, int &width, int &height)
 {
 #if  0
     FREE_IMAGE_FORMAT format = FreeImage_GetFileType(fileName, 0);
@@ -287,39 +289,52 @@ cl_mem LoadImage(cl_context context, char *fileName, int &width, int &height)
     height = FreeImage_GetHeight(image);
 #endif
     cv::Mat    img = cv::imread( fileName,  1 );
+    cv::imshow( "img-input", img );
+    //    cv::waitKey(0 );
+
     cv::Mat  imgrgba ;
-    cv::cvtColor( img, imgrgba, cv::COLOR_RGB2RGBA);
+    //    cv::cvtColor( img, imgrgba, cv::COLOR_RGB2RGBA);
+    cv::cvtColor(img, imgrgba,cv::COLOR_BGR2BGR555);
     img = imgrgba;
 
-    cv::imshow( "img-input", img );
+    int chans = img.channels();
+    std::cout<< "chans = "<<chans << std::endl;
+
+
+    cv::FileStorage fs("in.yml",  cv::FileStorage::WRITE);
+    fs<< "imgrgba" << imgrgba ;
+    fs.release();
+
 
     width = img.cols;
     height = img.rows;
-    char *buffer = new char[width * height * 4];
+    char *buffer = new char[width * height * chans];
 #if  0
-    memcpy(buffer, FreeImage_GetBits(image), width * height * 4);
+    memcpy(buffer, FreeImage_GetBits(image), width * height * chans);
     FreeImage_Unload(image);
 #endif
-    memcpy(buffer,  (img.data), width * height * 4);
+    memcpy(buffer,  (img.data), width * height * chans);
 
     // Create OpenCL image
     cl_image_format clImageFormat;
-    clImageFormat.image_channel_order = CL_RGBA;
-    clImageFormat.image_channel_data_type = CL_UNORM_INT8;
+    //    clImageFormat.image_channel_order = CL_RGBA;
+    clImageFormat.image_channel_order = CL_RGB ;
+    clImageFormat.image_channel_data_type = CL_UNORM_SHORT_555;//CL_UNORM_INT_101010;// CL_UNORM_SHORT_565;//CL_UNORM_INT8;
 
     cl_int errNum;
     cl_mem clImage;
     clImage = clCreateImage2D(
                 context,
-                              CL_MEM_READ_ONLY | CL_MEM_COPY_HOST_PTR,
-                              &clImageFormat,
-                              width,
-                              height,
-                              0,
-                              buffer,
-                              &errNum);
-    if (errNum != CL_SUCCESS)
-    {
+                CL_MEM_READ_ONLY | CL_MEM_COPY_HOST_PTR,
+//                 CL_MEM_READ_WRITE | CL_MEM_USE_HOST_PTR,
+//                CL_MEM_READ_WRITE | CL_MEM_COPY_HOST_PTR,
+                &clImageFormat,
+                width,
+                height,
+                0,
+                buffer,
+                &errNum);
+    if (errNum != CL_SUCCESS){
         std::cerr << "Error creating CL image object" << std::endl;
         return 0;
     }
@@ -329,7 +344,7 @@ cl_mem LoadImage(cl_context context, char *fileName, int &width, int &height)
 ///
 //  Save an image using the FreeImage library
 //
-bool SaveImage(char *fileName, char *buffer, int width, int height)
+bool SaveImage(char *fileName,unsigned char *buffer, int width, int height)
 {
 #if  0
     FREE_IMAGE_FORMAT format = FreeImage_GetFIFFromFilename(fileName);
@@ -337,11 +352,22 @@ bool SaveImage(char *fileName, char *buffer, int width, int height)
                                                    height, width * 4, 32,
                                                    0xFF000000, 0x00FF0000, 0x0000FF00);
     return (FreeImage_Save(format, image, fileName) == TRUE) ? true : false;
-    #endif
-    cv::Mat  img(height,width, CV_8UC4 );
-    img.data = (uchar*)buffer;
+#endif
+    //    cv::Mat  img(height,width, CV_8UC4 );
+    cv::Mat  img(height,width, CV_8UC3,cv::Scalar(0,0,0) );
+    cv::Mat imgrgba;
+    cv::cvtColor(img, imgrgba,cv::COLOR_BGR2BGR555);
+
+    //    imgrgba.data = (uchar*)buffer;
+    memcpy(imgrgba.data, buffer, height* width* imgrgba.channels()  );
+
+    cv::FileStorage fs("out.yml",  cv::FileStorage::WRITE);
+    fs<< "imgrgba" << imgrgba ;
+    fs.release();
+
+    cv::cvtColor(imgrgba,img  ,cv::COLOR_BGR5552BGR);
     cv::imwrite(fileName,img  );
-    cv::imshow( "img", img );
+    cv::imshow( "img", img  );
     cv::waitKey();
     return  true;
 }
@@ -374,18 +400,20 @@ int main(int argc, char** argv)
     cl_kernel kernel = 0;
     cl_mem imageObjects[2] = { 0, 0 };
     cl_sampler sampler = 0;
-    cl_int errNum;
+    cl_int errNum=0;
 
     argc = 3;
-//    argv = {"exe","23.jfif", "23.out.jfif"};
+    //    argv = {"exe","e9.jpeg", "e9.out.jpeg"};
     argv[0] = "exe" ;
+    //    argv[1] = "e9.jpeg" ;
+    //    argv[2] = "e9.out.jpeg" ;
     argv[1] = "23.jfif" ;
     argv[2] = "23.out.png" ;
 
     if (argc != 3)
     {
         std::cerr << "USAGE: " << argv[0] << " <inputImageFile> <outputImageFiles>" << std::endl;
-//        return 1;
+        //        return 1;
     }
 
     // Create an OpenCL context on first available platform
@@ -419,7 +447,7 @@ int main(int argc, char** argv)
     // Load input image from file and load it into
     // an OpenCL image object
     int width, height;
-    imageObjects[0] = LoadImage(context, argv[1], width, height);
+    imageObjects[0] = LoadImage_local(context, argv[1], width, height);
     if (imageObjects[0] == 0)
     {
         std::cerr << "Error loading: " << std::string(argv[1]) << std::endl;
@@ -433,17 +461,25 @@ int main(int argc, char** argv)
 
     // Create ouput image object
     cl_image_format clImageFormat;
-    clImageFormat.image_channel_order = CL_RGBA;
-    clImageFormat.image_channel_data_type = CL_UNORM_INT8;
-    imageObjects[1] = clCreateImage2D(context,
-                                      CL_MEM_WRITE_ONLY,
-                                      &clImageFormat,
-                                      width,
-                                      height,
-                                      0,
-                                      NULL,
-                                      &errNum);
-
+    //    clImageFormat.image_channel_order = CL_RGBA;
+    clImageFormat.image_channel_order = CL_RGB ;
+    clImageFormat.image_channel_data_type = CL_UNORM_SHORT_555;//CL_UNORM_INT_101010;// CL_UNORM_SHORT_565;//CL_UNORM_INT8;
+    unsigned  char* resultBuf = (unsigned char*)malloc(width*height* 2  );
+    memset(resultBuf, 255,  width*height* 2 );
+//    memcpy(resultBuf );
+//         imageObjects[1] = LoadImage_local(context, argv[1], width, height);
+    imageObjects[1] = clCreateImage2D(
+                context,
+                                CL_MEM_WRITE_ONLY  ,
+//                CL_MEM_READ_WRITE | CL_MEM_COPY_HOST_PTR,
+//                                   CL_MEM_READ_WRITE,
+                &clImageFormat,
+                width,
+                height,
+                0 ,
+                   NULL,
+//                resultBuf ,
+                &errNum);
     if (errNum != CL_SUCCESS)
     {
         std::cerr << "Error creating CL output image object." << std::endl;
@@ -453,12 +489,13 @@ int main(int argc, char** argv)
 
 
     // Create sampler for sampling image object
-    sampler = clCreateSampler(context,
-                              CL_FALSE, // Non-normalized coordinates
-                              CL_ADDRESS_CLAMP_TO_EDGE,
-                              CL_FILTER_NEAREST,
-                              &errNum);
-
+    sampler = clCreateSampler(
+                context,
+                CL_FALSE, // Non-normalized coordinates
+                //   CL_TRUE ,
+                CL_ADDRESS_CLAMP_TO_EDGE,
+                CL_FILTER_NEAREST,
+                &errNum);
     if (errNum != CL_SUCCESS)
     {
         std::cerr << "Error creating CL sampler object." << std::endl;
@@ -496,9 +533,13 @@ int main(int argc, char** argv)
         return 1;
     }
 
-    size_t localWorkSize[2] = { 16, 16 };
-    size_t globalWorkSize[2] =  { RoundUp(localWorkSize[0], width),
-                                  RoundUp(localWorkSize[1], height) };
+    //    size_t localWorkSize[2] = { 16, 16 };
+    //    size_t globalWorkSize[2] =  { RoundUp(localWorkSize[0], width),
+    //                                  RoundUp(localWorkSize[1], height) };
+
+    size_t localWorkSize[2] = { 4, 4 };
+    size_t globalWorkSize[2] =  { (size_t)width, (size_t) height };
+
 
     TimeRecorder   tr;
     // Queue the kernel up for execution
@@ -507,9 +548,9 @@ int main(int argc, char** argv)
                 globalWorkSize, localWorkSize,
                 0, NULL, NULL
                 );
-    if (errNum != CL_SUCCESS)
-    {
-        std::cerr << "Error queuing kernel for execution." << std::endl;
+    std::cerr << "执行结果，errNum = " <<errNum<<  std::endl;
+    if (errNum != CL_SUCCESS) {
+        std::cerr << "Error queuing kernel for execution.errNum= " <<errNum<<  std::endl;
         Cleanup(context, commandQueue, program, kernel, imageObjects, sampler);
         return 1;
     }
@@ -523,15 +564,21 @@ int main(int argc, char** argv)
         std::cout << " tr.recordTime() = " << tr.recordTime()<< " ms 毫秒.  "<< std::endl;
     }
 
-
-
+    // bgr555
+    int chans = 2  ;//4;
     // Read the output buffer back to the Host
-    char *buffer = new char [width * height * 4];
+    unsigned  char *buffer = new unsigned char [width * height * chans];
     size_t origin[3] = { 0, 0, 0 };
-    size_t region[3] = { (size_t)width, (size_t)height, 1};
-    errNum = clEnqueueReadImage(commandQueue, imageObjects[1], CL_TRUE,
-            origin, region, 0, 0, buffer,
-            0, NULL, NULL);
+    //    size_t region[3] = { (size_t)width, (size_t)height, 1};
+    size_t region[3] = { (size_t)width  , (size_t)height,  1 };
+    errNum = clEnqueueReadImage(
+                commandQueue, imageObjects[1]
+            , CL_TRUE
+            ,  origin, region
+            , width * chans , 0
+            //            , buffer
+            , resultBuf
+            ,  0, NULL, NULL);
     if (errNum != CL_SUCCESS)
     {
         std::cerr << "Error reading result buffer." << std::endl;
@@ -544,7 +591,8 @@ int main(int argc, char** argv)
 
     //memset(buffer, 0xff, width * height * 4);
     // Save the image out to disk
-    if (!SaveImage(argv[2], buffer, width, height))
+    //    if (!SaveImage(argv[2], buffer, width, height))
+    if (!SaveImage(argv[2], resultBuf, width, height))
     {
         std::cerr << "Error writing output image: " << argv[2] << std::endl;
         Cleanup(context, commandQueue, program, kernel, imageObjects, sampler);
@@ -552,20 +600,20 @@ int main(int argc, char** argv)
         return 1;
     }
 
-    delete [] buffer;
+    if(buffer) delete [] buffer;
     Cleanup(context, commandQueue, program, kernel, imageObjects, sampler);
     return 0;
 }
 
 
 //  /media/kent/SoftArchHgst1T/images__street/3.jfif    /media/kent/SoftArchHgst1T/images__street/3.jfif.oclFilterd.png
-
 //  /media/kent/SoftArchHgst1T/images__street/2_10.jpg   /media/kent/SoftArchHgst1T/images__street/2_10.jpg.oclFilterd.png
 
-
 //     E:/images__street/6.jpeg    E:/images__street/6.out.png
-
 //     E:/images__street/6g.bmp    E:/images__street/6g.out.bmp
-
 //     E:/images__street/e.bmp    E:/images__street/e.out.bmp
 //     E:/images__street/6.bmp    E:/images__street/6.out.bmp
+
+
+
+

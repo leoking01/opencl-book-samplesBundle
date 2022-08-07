@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by QtCreator 5.0.2, 2022-08-06T23:36:15. -->
+<!-- Written by QtCreator 5.0.2, 2022-08-07T23:02:46. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
@@ -96,7 +96,7 @@
    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">qt.qt5.51212.win64_msvc2015_64_kit</value>
    <value type="int" key="ProjectExplorer.Target.ActiveBuildConfiguration">0</value>
    <value type="int" key="ProjectExplorer.Target.ActiveDeployConfiguration">0</value>
-   <value type="int" key="ProjectExplorer.Target.ActiveRunConfiguration">9</value>
+   <value type="int" key="ProjectExplorer.Target.ActiveRunConfiguration">20</value>
    <valuemap type="QVariantMap" key="ProjectExplorer.Target.BuildConfiguration.0">
     <value type="QString" key="CMake.Build.Type">Debug</value>
     <value type="QString" key="CMake.Initial.Parameters">-GNinja
@@ -326,15 +326,15 @@
     <valuelist type="QVariantList" key="CustomOutputParsers"/>
     <value type="int" key="PE.EnvironmentAspect.Base">2</value>
     <valuelist type="QVariantList" key="PE.EnvironmentAspect.Changes"/>
-    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">ImageFilter2DCVRgba</value>
-    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">CMakeProjectManager.CMakeRunConfiguration.ImageFilter2DCVRgba</value>
-    <value type="QString" key="ProjectExplorer.RunConfiguration.BuildKey">ImageFilter2DCVRgba</value>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">Ch8ImageFilter2DCVRgb</value>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">CMakeProjectManager.CMakeRunConfiguration.Ch8ImageFilter2DCVRgb</value>
+    <value type="QString" key="ProjectExplorer.RunConfiguration.BuildKey">Ch8ImageFilter2DCVRgb</value>
     <value type="bool" key="RunConfiguration.UseCppDebugger">false</value>
     <value type="bool" key="RunConfiguration.UseCppDebuggerAuto">true</value>
     <value type="bool" key="RunConfiguration.UseLibrarySearchPath">true</value>
     <value type="bool" key="RunConfiguration.UseQmlDebugger">false</value>
     <value type="bool" key="RunConfiguration.UseQmlDebuggerAuto">true</value>
-    <value type="QString" key="RunConfiguration.WorkingDirectory.default">E:/downloadBaidu/ANULLEVER/opencl-book-samplesBundle/build-codeVs14RunOk-Desktop_Qt_5_12_12_MSVC2015_64bit-Debug/src/Chapter_8/ImageFilter2DCVRgba</value>
+    <value type="QString" key="RunConfiguration.WorkingDirectory.default">E:/downloadBaidu/ANULLEVER/opencl-book-samplesBundle/build-codeVs14RunOk-Desktop_Qt_5_12_12_MSVC2015_64bit-Debug/src/Chapter_8/ImageFilter2DCVRgb</value>
    </valuemap>
    <valuemap type="QVariantMap" key="ProjectExplorer.Target.RunConfiguration.11">
     <value type="bool" key="Analyzer.Perf.Settings.UseGlobalSettings">true</value>
@@ -343,15 +343,151 @@
     <valuelist type="QVariantList" key="CustomOutputParsers"/>
     <value type="int" key="PE.EnvironmentAspect.Base">2</value>
     <valuelist type="QVariantList" key="PE.EnvironmentAspect.Changes"/>
-    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">ImageFilter2DCvGrey</value>
-    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">CMakeProjectManager.CMakeRunConfiguration.ImageFilter2DCvGrey</value>
-    <value type="QString" key="ProjectExplorer.RunConfiguration.BuildKey">ImageFilter2DCvGrey</value>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">Ch8ImageFilter2DCVRgba</value>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">CMakeProjectManager.CMakeRunConfiguration.Ch8ImageFilter2DCVRgba</value>
+    <value type="QString" key="ProjectExplorer.RunConfiguration.BuildKey">Ch8ImageFilter2DCVRgba</value>
     <value type="bool" key="RunConfiguration.UseCppDebugger">false</value>
     <value type="bool" key="RunConfiguration.UseCppDebuggerAuto">true</value>
     <value type="bool" key="RunConfiguration.UseLibrarySearchPath">true</value>
     <value type="bool" key="RunConfiguration.UseQmlDebugger">false</value>
     <value type="bool" key="RunConfiguration.UseQmlDebuggerAuto">true</value>
-    <value type="QString" key="RunConfiguration.WorkingDirectory.default">E:/downloadBaidu/ANULLEVER/opencl-book-samplesBundle/build-codeVs14RunOk-Desktop_Qt_5_12_12_MSVC2015_64bit-Debug/src/Chapter_8/ImageFilter2DCvGrey</value>
+    <value type="QString" key="RunConfiguration.WorkingDirectory.default">E:/downloadBaidu/ANULLEVER/opencl-book-samplesBundle/build-codeVs14RunOk-Desktop_Qt_5_12_12_MSVC2015_64bit-Debug/src/Chapter_8/ImageFilter2DCVRgba</value>
+   </valuemap>
+   <valuemap type="QVariantMap" key="ProjectExplorer.Target.RunConfiguration.12">
+    <value type="bool" key="Analyzer.Perf.Settings.UseGlobalSettings">true</value>
+    <value type="bool" key="Analyzer.QmlProfiler.Settings.UseGlobalSettings">true</value>
+    <value type="bool" key="Analyzer.Valgrind.Settings.UseGlobalSettings">true</value>
+    <valuelist type="QVariantList" key="CustomOutputParsers"/>
+    <value type="int" key="PE.EnvironmentAspect.Base">2</value>
+    <valuelist type="QVariantList" key="PE.EnvironmentAspect.Changes"/>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">Ch8ImageFilter2DCVRgbaCopy</value>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">CMakeProjectManager.CMakeRunConfiguration.Ch8ImageFilter2DCVRgbaCopy</value>
+    <value type="QString" key="ProjectExplorer.RunConfiguration.BuildKey">Ch8ImageFilter2DCVRgbaCopy</value>
+    <value type="bool" key="RunConfiguration.UseCppDebugger">false</value>
+    <value type="bool" key="RunConfiguration.UseCppDebuggerAuto">true</value>
+    <value type="bool" key="RunConfiguration.UseLibrarySearchPath">true</value>
+    <value type="bool" key="RunConfiguration.UseQmlDebugger">false</value>
+    <value type="bool" key="RunConfiguration.UseQmlDebuggerAuto">true</value>
+    <value type="QString" key="RunConfiguration.WorkingDirectory.default">E:/downloadBaidu/ANULLEVER/opencl-book-samplesBundle/build-codeVs14RunOk-Desktop_Qt_5_12_12_MSVC2015_64bit-Debug/src/Chapter_8/ImageFilter2DCVRgbaCopy</value>
+   </valuemap>
+   <valuemap type="QVariantMap" key="ProjectExplorer.Target.RunConfiguration.13">
+    <value type="bool" key="Analyzer.Perf.Settings.UseGlobalSettings">true</value>
+    <value type="bool" key="Analyzer.QmlProfiler.Settings.UseGlobalSettings">true</value>
+    <value type="bool" key="Analyzer.Valgrind.Settings.UseGlobalSettings">true</value>
+    <valuelist type="QVariantList" key="CustomOutputParsers"/>
+    <value type="int" key="PE.EnvironmentAspect.Base">2</value>
+    <valuelist type="QVariantList" key="PE.EnvironmentAspect.Changes"/>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">Ch8ImageFilter2DCVRgbaLaplace</value>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">CMakeProjectManager.CMakeRunConfiguration.Ch8ImageFilter2DCVRgbaLaplace</value>
+    <value type="QString" key="ProjectExplorer.RunConfiguration.BuildKey">Ch8ImageFilter2DCVRgbaLaplace</value>
+    <value type="bool" key="RunConfiguration.UseCppDebugger">false</value>
+    <value type="bool" key="RunConfiguration.UseCppDebuggerAuto">true</value>
+    <value type="bool" key="RunConfiguration.UseLibrarySearchPath">true</value>
+    <value type="bool" key="RunConfiguration.UseQmlDebugger">false</value>
+    <value type="bool" key="RunConfiguration.UseQmlDebuggerAuto">true</value>
+    <value type="QString" key="RunConfiguration.WorkingDirectory.default">E:/downloadBaidu/ANULLEVER/opencl-book-samplesBundle/build-codeVs14RunOk-Desktop_Qt_5_12_12_MSVC2015_64bit-Debug/src/Chapter_8/ImageFilter2DCVRgbaLaplace</value>
+   </valuemap>
+   <valuemap type="QVariantMap" key="ProjectExplorer.Target.RunConfiguration.14">
+    <value type="bool" key="Analyzer.Perf.Settings.UseGlobalSettings">true</value>
+    <value type="bool" key="Analyzer.QmlProfiler.Settings.UseGlobalSettings">true</value>
+    <value type="bool" key="Analyzer.Valgrind.Settings.UseGlobalSettings">true</value>
+    <valuelist type="QVariantList" key="CustomOutputParsers"/>
+    <value type="int" key="PE.EnvironmentAspect.Base">2</value>
+    <valuelist type="QVariantList" key="PE.EnvironmentAspect.Changes"/>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">Ch8ImageFilter2DCVRgbaLaplaceX</value>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">CMakeProjectManager.CMakeRunConfiguration.Ch8ImageFilter2DCVRgbaLaplaceX</value>
+    <value type="QString" key="ProjectExplorer.RunConfiguration.BuildKey">Ch8ImageFilter2DCVRgbaLaplaceX</value>
+    <value type="bool" key="RunConfiguration.UseCppDebugger">false</value>
+    <value type="bool" key="RunConfiguration.UseCppDebuggerAuto">true</value>
+    <value type="bool" key="RunConfiguration.UseLibrarySearchPath">true</value>
+    <value type="bool" key="RunConfiguration.UseQmlDebugger">false</value>
+    <value type="bool" key="RunConfiguration.UseQmlDebuggerAuto">true</value>
+    <value type="QString" key="RunConfiguration.WorkingDirectory.default">E:/downloadBaidu/ANULLEVER/opencl-book-samplesBundle/build-codeVs14RunOk-Desktop_Qt_5_12_12_MSVC2015_64bit-Debug/src/Chapter_8/ImageFilter2DCVRgbaLaplaceX</value>
+   </valuemap>
+   <valuemap type="QVariantMap" key="ProjectExplorer.Target.RunConfiguration.15">
+    <value type="bool" key="Analyzer.Perf.Settings.UseGlobalSettings">true</value>
+    <value type="bool" key="Analyzer.QmlProfiler.Settings.UseGlobalSettings">true</value>
+    <value type="bool" key="Analyzer.Valgrind.Settings.UseGlobalSettings">true</value>
+    <valuelist type="QVariantList" key="CustomOutputParsers"/>
+    <value type="int" key="PE.EnvironmentAspect.Base">2</value>
+    <valuelist type="QVariantList" key="PE.EnvironmentAspect.Changes"/>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">Ch8ImageFilter2DCVRgbaMedian</value>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">CMakeProjectManager.CMakeRunConfiguration.Ch8ImageFilter2DCVRgbaMedian</value>
+    <value type="QString" key="ProjectExplorer.RunConfiguration.BuildKey">Ch8ImageFilter2DCVRgbaMedian</value>
+    <value type="bool" key="RunConfiguration.UseCppDebugger">false</value>
+    <value type="bool" key="RunConfiguration.UseCppDebuggerAuto">true</value>
+    <value type="bool" key="RunConfiguration.UseLibrarySearchPath">true</value>
+    <value type="bool" key="RunConfiguration.UseQmlDebugger">false</value>
+    <value type="bool" key="RunConfiguration.UseQmlDebuggerAuto">true</value>
+    <value type="QString" key="RunConfiguration.WorkingDirectory.default">E:/downloadBaidu/ANULLEVER/opencl-book-samplesBundle/build-codeVs14RunOk-Desktop_Qt_5_12_12_MSVC2015_64bit-Debug/src/Chapter_8/ImageFilter2DCVRgbaMedian</value>
+   </valuemap>
+   <valuemap type="QVariantMap" key="ProjectExplorer.Target.RunConfiguration.16">
+    <value type="bool" key="Analyzer.Perf.Settings.UseGlobalSettings">true</value>
+    <value type="bool" key="Analyzer.QmlProfiler.Settings.UseGlobalSettings">true</value>
+    <value type="bool" key="Analyzer.Valgrind.Settings.UseGlobalSettings">true</value>
+    <valuelist type="QVariantList" key="CustomOutputParsers"/>
+    <value type="int" key="PE.EnvironmentAspect.Base">2</value>
+    <valuelist type="QVariantList" key="PE.EnvironmentAspect.Changes"/>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">Ch8ImageFilter2DCVRgbaMid</value>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">CMakeProjectManager.CMakeRunConfiguration.Ch8ImageFilter2DCVRgbaMid</value>
+    <value type="QString" key="ProjectExplorer.RunConfiguration.BuildKey">Ch8ImageFilter2DCVRgbaMid</value>
+    <value type="bool" key="RunConfiguration.UseCppDebugger">false</value>
+    <value type="bool" key="RunConfiguration.UseCppDebuggerAuto">true</value>
+    <value type="bool" key="RunConfiguration.UseLibrarySearchPath">true</value>
+    <value type="bool" key="RunConfiguration.UseQmlDebugger">false</value>
+    <value type="bool" key="RunConfiguration.UseQmlDebuggerAuto">true</value>
+    <value type="QString" key="RunConfiguration.WorkingDirectory.default">E:/downloadBaidu/ANULLEVER/opencl-book-samplesBundle/build-codeVs14RunOk-Desktop_Qt_5_12_12_MSVC2015_64bit-Debug/src/Chapter_8/ImageFilter2DCVRgbaMid</value>
+   </valuemap>
+   <valuemap type="QVariantMap" key="ProjectExplorer.Target.RunConfiguration.17">
+    <value type="bool" key="Analyzer.Perf.Settings.UseGlobalSettings">true</value>
+    <value type="bool" key="Analyzer.QmlProfiler.Settings.UseGlobalSettings">true</value>
+    <value type="bool" key="Analyzer.Valgrind.Settings.UseGlobalSettings">true</value>
+    <valuelist type="QVariantList" key="CustomOutputParsers"/>
+    <value type="int" key="PE.EnvironmentAspect.Base">2</value>
+    <valuelist type="QVariantList" key="PE.EnvironmentAspect.Changes"/>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">Ch8ImageFilter2DCVRgbaSobel</value>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">CMakeProjectManager.CMakeRunConfiguration.Ch8ImageFilter2DCVRgbaSobel</value>
+    <value type="QString" key="ProjectExplorer.RunConfiguration.BuildKey">Ch8ImageFilter2DCVRgbaSobel</value>
+    <value type="bool" key="RunConfiguration.UseCppDebugger">false</value>
+    <value type="bool" key="RunConfiguration.UseCppDebuggerAuto">true</value>
+    <value type="bool" key="RunConfiguration.UseLibrarySearchPath">true</value>
+    <value type="bool" key="RunConfiguration.UseQmlDebugger">false</value>
+    <value type="bool" key="RunConfiguration.UseQmlDebuggerAuto">true</value>
+    <value type="QString" key="RunConfiguration.WorkingDirectory.default">E:/downloadBaidu/ANULLEVER/opencl-book-samplesBundle/build-codeVs14RunOk-Desktop_Qt_5_12_12_MSVC2015_64bit-Debug/src/Chapter_8/ImageFilter2DCVRgbaSobel</value>
+   </valuemap>
+   <valuemap type="QVariantMap" key="ProjectExplorer.Target.RunConfiguration.18">
+    <value type="bool" key="Analyzer.Perf.Settings.UseGlobalSettings">true</value>
+    <value type="bool" key="Analyzer.QmlProfiler.Settings.UseGlobalSettings">true</value>
+    <value type="bool" key="Analyzer.Valgrind.Settings.UseGlobalSettings">true</value>
+    <valuelist type="QVariantList" key="CustomOutputParsers"/>
+    <value type="int" key="PE.EnvironmentAspect.Base">2</value>
+    <valuelist type="QVariantList" key="PE.EnvironmentAspect.Changes"/>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">Ch8ImageFilter2DFreeImageRGBA</value>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">CMakeProjectManager.CMakeRunConfiguration.Ch8ImageFilter2DFreeImageRGBA</value>
+    <value type="QString" key="ProjectExplorer.RunConfiguration.BuildKey">Ch8ImageFilter2DFreeImageRGBA</value>
+    <value type="bool" key="RunConfiguration.UseCppDebugger">false</value>
+    <value type="bool" key="RunConfiguration.UseCppDebuggerAuto">true</value>
+    <value type="bool" key="RunConfiguration.UseLibrarySearchPath">true</value>
+    <value type="bool" key="RunConfiguration.UseQmlDebugger">false</value>
+    <value type="bool" key="RunConfiguration.UseQmlDebuggerAuto">true</value>
+    <value type="QString" key="RunConfiguration.WorkingDirectory.default">E:/downloadBaidu/ANULLEVER/opencl-book-samplesBundle/build-codeVs14RunOk-Desktop_Qt_5_12_12_MSVC2015_64bit-Debug/src/Chapter_8/ImageFilter2DFreeImageRGBA</value>
+   </valuemap>
+   <valuemap type="QVariantMap" key="ProjectExplorer.Target.RunConfiguration.19">
+    <value type="bool" key="Analyzer.Perf.Settings.UseGlobalSettings">true</value>
+    <value type="bool" key="Analyzer.QmlProfiler.Settings.UseGlobalSettings">true</value>
+    <value type="bool" key="Analyzer.Valgrind.Settings.UseGlobalSettings">true</value>
+    <valuelist type="QVariantList" key="CustomOutputParsers"/>
+    <value type="int" key="PE.EnvironmentAspect.Base">2</value>
+    <valuelist type="QVariantList" key="PE.EnvironmentAspect.Changes"/>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">ImageFilter2DCVRgbaReverse</value>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">CMakeProjectManager.CMakeRunConfiguration.ImageFilter2DCVRgbaReverse</value>
+    <value type="QString" key="ProjectExplorer.RunConfiguration.BuildKey">ImageFilter2DCVRgbaReverse</value>
+    <value type="bool" key="RunConfiguration.UseCppDebugger">false</value>
+    <value type="bool" key="RunConfiguration.UseCppDebuggerAuto">true</value>
+    <value type="bool" key="RunConfiguration.UseLibrarySearchPath">true</value>
+    <value type="bool" key="RunConfiguration.UseQmlDebugger">false</value>
+    <value type="bool" key="RunConfiguration.UseQmlDebuggerAuto">true</value>
+    <value type="QString" key="RunConfiguration.WorkingDirectory.default">E:/downloadBaidu/ANULLEVER/opencl-book-samplesBundle/build-codeVs14RunOk-Desktop_Qt_5_12_12_MSVC2015_64bit-Debug/src/Chapter_8/ImageFilter2DCVRgbaReverse</value>
    </valuemap>
    <valuemap type="QVariantMap" key="ProjectExplorer.Target.RunConfiguration.2">
     <value type="bool" key="Analyzer.Perf.Settings.UseGlobalSettings">true</value>
@@ -370,24 +506,24 @@
     <value type="bool" key="RunConfiguration.UseQmlDebuggerAuto">true</value>
     <value type="QString" key="RunConfiguration.WorkingDirectory.default">E:/downloadBaidu/ANULLEVER/opencl-book-samplesBundle/build-codeVs14RunOk-Desktop_Qt_5_12_12_MSVC2015_64bit-Debug/src/Chapter_2/HelloWorld</value>
    </valuemap>
-   <valuemap type="QVariantMap" key="ProjectExplorer.Target.RunConfiguration.3">
+   <valuemap type="QVariantMap" key="ProjectExplorer.Target.RunConfiguration.20">
     <value type="bool" key="Analyzer.Perf.Settings.UseGlobalSettings">true</value>
     <value type="bool" key="Analyzer.QmlProfiler.Settings.UseGlobalSettings">true</value>
     <value type="bool" key="Analyzer.Valgrind.Settings.UseGlobalSettings">true</value>
     <valuelist type="QVariantList" key="CustomOutputParsers"/>
     <value type="int" key="PE.EnvironmentAspect.Base">2</value>
     <valuelist type="QVariantList" key="PE.EnvironmentAspect.Changes"/>
-    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">ImageFilter2D</value>
-    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">CMakeProjectManager.CMakeRunConfiguration.ImageFilter2D</value>
-    <value type="QString" key="ProjectExplorer.RunConfiguration.BuildKey">ImageFilter2D</value>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">Ch8Rgb2Rgba</value>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">CMakeProjectManager.CMakeRunConfiguration.Ch8Rgb2Rgba</value>
+    <value type="QString" key="ProjectExplorer.RunConfiguration.BuildKey">Ch8Rgb2Rgba</value>
     <value type="bool" key="RunConfiguration.UseCppDebugger">false</value>
     <value type="bool" key="RunConfiguration.UseCppDebuggerAuto">true</value>
     <value type="bool" key="RunConfiguration.UseLibrarySearchPath">true</value>
     <value type="bool" key="RunConfiguration.UseQmlDebugger">false</value>
     <value type="bool" key="RunConfiguration.UseQmlDebuggerAuto">true</value>
-    <value type="QString" key="RunConfiguration.WorkingDirectory.default">E:/downloadBaidu/ANULLEVER/opencl-book-samplesBundle/build-codeVs14RunOk-Desktop_Qt_5_12_12_MSVC2015_64bit-Debug/src/Chapter_8/ImageFilter2D</value>
+    <value type="QString" key="RunConfiguration.WorkingDirectory.default">E:/downloadBaidu/ANULLEVER/opencl-book-samplesBundle/build-codeVs14RunOk-Desktop_Qt_5_12_12_MSVC2015_64bit-Debug/src/Chapter_8/Ch8Rgb2Rgba</value>
    </valuemap>
-   <valuemap type="QVariantMap" key="ProjectExplorer.Target.RunConfiguration.4">
+   <valuemap type="QVariantMap" key="ProjectExplorer.Target.RunConfiguration.3">
     <value type="bool" key="Analyzer.Perf.Settings.UseGlobalSettings">true</value>
     <value type="bool" key="Analyzer.QmlProfiler.Settings.UseGlobalSettings">true</value>
     <value type="bool" key="Analyzer.Valgrind.Settings.UseGlobalSettings">true</value>
@@ -404,7 +540,7 @@
     <value type="bool" key="RunConfiguration.UseQmlDebuggerAuto">true</value>
     <value type="QString" key="RunConfiguration.WorkingDirectory.default">E:/downloadBaidu/ANULLEVER/opencl-book-samplesBundle/build-codeVs14RunOk-Desktop_Qt_5_12_12_MSVC2015_64bit-Debug/src/Chapter_3/OpenCLConvolution</value>
    </valuemap>
-   <valuemap type="QVariantMap" key="ProjectExplorer.Target.RunConfiguration.5">
+   <valuemap type="QVariantMap" key="ProjectExplorer.Target.RunConfiguration.4">
     <value type="bool" key="Analyzer.Perf.Settings.UseGlobalSettings">true</value>
     <value type="bool" key="Analyzer.QmlProfiler.Settings.UseGlobalSettings">true</value>
     <value type="bool" key="Analyzer.Valgrind.Settings.UseGlobalSettings">true</value>
@@ -421,7 +557,7 @@
     <value type="bool" key="RunConfiguration.UseQmlDebuggerAuto">true</value>
     <value type="QString" key="RunConfiguration.WorkingDirectory.default">E:/downloadBaidu/ANULLEVER/opencl-book-samplesBundle/build-codeVs14RunOk-Desktop_Qt_5_12_12_MSVC2015_64bit-Debug/src/Chapter_3/OpenCLInfo</value>
    </valuemap>
-   <valuemap type="QVariantMap" key="ProjectExplorer.Target.RunConfiguration.6">
+   <valuemap type="QVariantMap" key="ProjectExplorer.Target.RunConfiguration.5">
     <value type="bool" key="Analyzer.Perf.Settings.UseGlobalSettings">true</value>
     <value type="bool" key="Analyzer.QmlProfiler.Settings.UseGlobalSettings">true</value>
     <value type="bool" key="Analyzer.Valgrind.Settings.UseGlobalSettings">true</value>
@@ -438,7 +574,7 @@
     <value type="bool" key="RunConfiguration.UseQmlDebuggerAuto">true</value>
     <value type="QString" key="RunConfiguration.WorkingDirectory.default">E:/downloadBaidu/ANULLEVER/opencl-book-samplesBundle/build-codeVs14RunOk-Desktop_Qt_5_12_12_MSVC2015_64bit-Debug/src/Chapter_7/SimpleBufferSubBuffer</value>
    </valuemap>
-   <valuemap type="QVariantMap" key="ProjectExplorer.Target.RunConfiguration.7">
+   <valuemap type="QVariantMap" key="ProjectExplorer.Target.RunConfiguration.6">
     <value type="bool" key="Analyzer.Perf.Settings.UseGlobalSettings">true</value>
     <value type="bool" key="Analyzer.QmlProfiler.Settings.UseGlobalSettings">true</value>
     <value type="bool" key="Analyzer.Valgrind.Settings.UseGlobalSettings">true</value>
@@ -455,7 +591,7 @@
     <value type="bool" key="RunConfiguration.UseQmlDebuggerAuto">true</value>
     <value type="QString" key="RunConfiguration.WorkingDirectory.default">E:/downloadBaidu/ANULLEVER/opencl-book-samplesBundle/build-codeVs14RunOk-Desktop_Qt_5_12_12_MSVC2015_64bit-Debug/src/Chapter_14/histogram</value>
    </valuemap>
-   <valuemap type="QVariantMap" key="ProjectExplorer.Target.RunConfiguration.8">
+   <valuemap type="QVariantMap" key="ProjectExplorer.Target.RunConfiguration.7">
     <value type="bool" key="Analyzer.Perf.Settings.UseGlobalSettings">true</value>
     <value type="bool" key="Analyzer.QmlProfiler.Settings.UseGlobalSettings">true</value>
     <value type="bool" key="Analyzer.Valgrind.Settings.UseGlobalSettings">true</value>
@@ -472,6 +608,23 @@
     <value type="bool" key="RunConfiguration.UseQmlDebuggerAuto">true</value>
     <value type="QString" key="RunConfiguration.WorkingDirectory.default">E:/downloadBaidu/ANULLEVER/opencl-book-samplesBundle/build-codeVs14RunOk-Desktop_Qt_5_12_12_MSVC2015_64bit-Debug/src/Chapter_12/VectorAdd</value>
    </valuemap>
+   <valuemap type="QVariantMap" key="ProjectExplorer.Target.RunConfiguration.8">
+    <value type="bool" key="Analyzer.Perf.Settings.UseGlobalSettings">true</value>
+    <value type="bool" key="Analyzer.QmlProfiler.Settings.UseGlobalSettings">true</value>
+    <value type="bool" key="Analyzer.Valgrind.Settings.UseGlobalSettings">true</value>
+    <valuelist type="QVariantList" key="CustomOutputParsers"/>
+    <value type="int" key="PE.EnvironmentAspect.Base">2</value>
+    <valuelist type="QVariantList" key="PE.EnvironmentAspect.Changes"/>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">Ch8RgbCopyRgb</value>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">CMakeProjectManager.CMakeRunConfiguration.Ch8RgbCopyRgb</value>
+    <value type="QString" key="ProjectExplorer.RunConfiguration.BuildKey">Ch8RgbCopyRgb</value>
+    <value type="bool" key="RunConfiguration.UseCppDebugger">false</value>
+    <value type="bool" key="RunConfiguration.UseCppDebuggerAuto">true</value>
+    <value type="bool" key="RunConfiguration.UseLibrarySearchPath">true</value>
+    <value type="bool" key="RunConfiguration.UseQmlDebugger">false</value>
+    <value type="bool" key="RunConfiguration.UseQmlDebuggerAuto">true</value>
+    <value type="QString" key="RunConfiguration.WorkingDirectory.default">E:/downloadBaidu/ANULLEVER/opencl-book-samplesBundle/build-codeVs14RunOk-Desktop_Qt_5_12_12_MSVC2015_64bit-Debug/src/Chapter_8/Ch8RgbCopyRgb</value>
+   </valuemap>
    <valuemap type="QVariantMap" key="ProjectExplorer.Target.RunConfiguration.9">
     <value type="bool" key="Analyzer.Perf.Settings.UseGlobalSettings">true</value>
     <value type="bool" key="Analyzer.QmlProfiler.Settings.UseGlobalSettings">true</value>
@@ -479,17 +632,17 @@
     <valuelist type="QVariantList" key="CustomOutputParsers"/>
     <value type="int" key="PE.EnvironmentAspect.Base">2</value>
     <valuelist type="QVariantList" key="PE.EnvironmentAspect.Changes"/>
-    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">ImageFilter2DCVRgb</value>
-    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">CMakeProjectManager.CMakeRunConfiguration.ImageFilter2DCVRgb</value>
-    <value type="QString" key="ProjectExplorer.RunConfiguration.BuildKey">ImageFilter2DCVRgb</value>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">Ch8ImageFilter2DCvGrey</value>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">CMakeProjectManager.CMakeRunConfiguration.Ch8ImageFilter2DCvGrey</value>
+    <value type="QString" key="ProjectExplorer.RunConfiguration.BuildKey">Ch8ImageFilter2DCvGrey</value>
     <value type="bool" key="RunConfiguration.UseCppDebugger">false</value>
     <value type="bool" key="RunConfiguration.UseCppDebuggerAuto">true</value>
     <value type="bool" key="RunConfiguration.UseLibrarySearchPath">true</value>
     <value type="bool" key="RunConfiguration.UseQmlDebugger">false</value>
     <value type="bool" key="RunConfiguration.UseQmlDebuggerAuto">true</value>
-    <value type="QString" key="RunConfiguration.WorkingDirectory.default">E:/downloadBaidu/ANULLEVER/opencl-book-samplesBundle/build-codeVs14RunOk-Desktop_Qt_5_12_12_MSVC2015_64bit-Debug/src/Chapter_8/ImageFilter2DCVRgb</value>
+    <value type="QString" key="RunConfiguration.WorkingDirectory.default">E:/downloadBaidu/ANULLEVER/opencl-book-samplesBundle/build-codeVs14RunOk-Desktop_Qt_5_12_12_MSVC2015_64bit-Debug/src/Chapter_8/ImageFilter2DCvGrey</value>
    </valuemap>
-   <value type="int" key="ProjectExplorer.Target.RunConfigurationCount">12</value>
+   <value type="int" key="ProjectExplorer.Target.RunConfigurationCount">21</value>
   </valuemap>
  </data>
  <data>

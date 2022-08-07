@@ -51,8 +51,10 @@
 
 #include <stdio.h>
 #include <math.h>
-
 #include <opencv2/opencv.hpp>
+
+
+#include <chrono>
 
 class   TimeRecorder {
 public:
@@ -78,6 +80,14 @@ public:
         end = std::clock(); //程序结束用时
         double endtime = (double) (end - start) / CLOCKS_PER_SEC;
         //         double endtime = (double) (end - start) ;/// CLOCKS_PER_SEC;
+
+
+        //        auto f2 = std::chrono::high_resolution_clock::now();
+        //        end = std::chrono::high_resolution_clock::now();
+        //        endtime = double(std::chrono::duration_cast<std::chrono::microseconds>(end - start).count()) / 1000000;
+        //        printf("OpenCV Processing Time:  %1f msec \n", d2);
+
+
         return endtime * 1000.0;//* 1000;
     }
 
@@ -88,7 +98,21 @@ public:
     clock_t start, end;
 };
 
-
+//class  TimeRecorder11{
+//public:
+//    TimeRecorder11() {
+//        start =  std::chrono::high_resolution_clock::now();  //程序开始计时
+//        //        start = (clock_t)GetSysTimeMicros();
+//    }
+//    double recordTime() {
+//        end  =  std::chrono::high_resolution_clock::now();  //程序开始计时
+//        double endtime =double(std::chrono::duration_cast<std::chrono::microseconds>(end - start).count()) / 1000000;
+//        return endtime * 1000.0;//* 1000;
+//    }
+//public:
+//    //     typedef chrono::time_point<system_clock> time_point;
+//    std::chrono::duration_cast<std::chrono::microseconds> start, end;
+//};
 
 
 #ifdef _WIN32
@@ -249,20 +273,28 @@ cl_program CreateProgram(cl_context context, cl_device_id device, const char* fi
 //
 void Cleanup(cl_context context, cl_command_queue commandQueue,
              cl_program program, cl_kernel kernel, cl_mem imageObjects[2],
-cl_sampler sampler){
-    for (int i = 0; i < 2; i++)    {
+cl_sampler sampler)
+{
+    for (int i = 0; i < 2; i++)
+    {
         if (imageObjects[i] != 0)
             clReleaseMemObject(imageObjects[i]);
     }
-    if (commandQueue != 0) clReleaseCommandQueue(commandQueue);
+    if (commandQueue != 0)
+        clReleaseCommandQueue(commandQueue);
 
-    if (kernel != 0)clReleaseKernel(kernel);
+    if (kernel != 0)
+        clReleaseKernel(kernel);
 
-    if (program != 0) clReleaseProgram(program);
+    if (program != 0)
+        clReleaseProgram(program);
 
-    if (sampler != 0) clReleaseSampler(sampler);
+    if (sampler != 0)
+        clReleaseSampler(sampler);
 
-    if (context != 0) clReleaseContext(context);
+    if (context != 0)
+        clReleaseContext(context);
+
 }
 
 
@@ -311,18 +343,20 @@ cl_mem LoadImage(cl_context context, char *fileName, int &width, int &height)
     cl_mem clImage;
     clImage = clCreateImage2D(
                 context,
-                              CL_MEM_READ_ONLY | CL_MEM_COPY_HOST_PTR,
-                              &clImageFormat,
-                              width,
-                              height,
-                              0,
-                              buffer,
-                              &errNum);
+                CL_MEM_READ_ONLY | CL_MEM_COPY_HOST_PTR,
+                &clImageFormat,
+                width,
+                height,
+                0,
+                buffer,
+                &errNum);
+
     if (errNum != CL_SUCCESS)
     {
         std::cerr << "Error creating CL image object" << std::endl;
         return 0;
     }
+
     return clImage;
 }
 
@@ -337,7 +371,7 @@ bool SaveImage(char *fileName, char *buffer, int width, int height)
                                                    height, width * 4, 32,
                                                    0xFF000000, 0x00FF0000, 0x0000FF00);
     return (FreeImage_Save(format, image, fileName) == TRUE) ? true : false;
-    #endif
+#endif
     cv::Mat  img(height,width, CV_8UC4 );
     img.data = (uchar*)buffer;
     cv::imwrite(fileName,img  );
@@ -377,7 +411,7 @@ int main(int argc, char** argv)
     cl_int errNum;
 
     argc = 3;
-//    argv = {"exe","23.jfif", "23.out.jfif"};
+    //    argv = {"exe","23.jfif", "23.out.jfif"};
     argv[0] = "exe" ;
     argv[1] = "23.jfif" ;
     argv[2] = "23.out.png" ;
@@ -385,7 +419,7 @@ int main(int argc, char** argv)
     if (argc != 3)
     {
         std::cerr << "USAGE: " << argv[0] << " <inputImageFile> <outputImageFiles>" << std::endl;
-//        return 1;
+        //        return 1;
     }
 
     // Create an OpenCL context on first available platform
@@ -500,7 +534,8 @@ int main(int argc, char** argv)
     size_t globalWorkSize[2] =  { RoundUp(localWorkSize[0], width),
                                   RoundUp(localWorkSize[1], height) };
 
-    TimeRecorder   tr;
+    //    TimeRecorder   tr;
+    auto t1 =  std::chrono::high_resolution_clock::now();
     // Queue the kernel up for execution
     errNum = clEnqueueNDRangeKernel(
                 commandQueue, kernel, 2, NULL,
@@ -513,14 +548,21 @@ int main(int argc, char** argv)
         Cleanup(context, commandQueue, program, kernel, imageObjects, sampler);
         return 1;
     }
-    std::cout << " tr.recordTime() = " << tr.recordTime()<< " ms 毫秒.  "<< std::endl;
+
+    auto t2 =  std::chrono::high_resolution_clock::now();
+    double costime =double(std::chrono::duration_cast<std::chrono::microseconds>(t2 - t1).count()) / 1000000;
+    //            costime = tr.recordTime() ;
+    std::cout << "opencl cost tiem:  tr.recordTime() = " <<costime << " ms 毫秒.  "<< std::endl;
 
 
 
     {
-        tr.reset();
+        //        tr.reset();
+        auto t3 =  std::chrono::high_resolution_clock::now();
+        auto t4 =  std::chrono::high_resolution_clock::now();
+        double costime2 =double(std::chrono::duration_cast<std::chrono::microseconds>(t4 - t3).count()) / 1000000;
         // free image  proc
-        std::cout << " tr.recordTime() = " << tr.recordTime()<< " ms 毫秒.  "<< std::endl;
+        std::cout << " costime2 = " << costime2<< " ms 毫秒.  "<< std::endl;
     }
 
 
@@ -559,13 +601,9 @@ int main(int argc, char** argv)
 
 
 //  /media/kent/SoftArchHgst1T/images__street/3.jfif    /media/kent/SoftArchHgst1T/images__street/3.jfif.oclFilterd.png
-
 //  /media/kent/SoftArchHgst1T/images__street/2_10.jpg   /media/kent/SoftArchHgst1T/images__street/2_10.jpg.oclFilterd.png
 
-
 //     E:/images__street/6.jpeg    E:/images__street/6.out.png
-
 //     E:/images__street/6g.bmp    E:/images__street/6g.out.bmp
-
 //     E:/images__street/e.bmp    E:/images__street/e.out.bmp
 //     E:/images__street/6.bmp    E:/images__street/6.out.bmp
