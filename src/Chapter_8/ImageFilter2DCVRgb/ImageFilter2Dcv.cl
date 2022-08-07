@@ -1,10 +1,12 @@
 
 // Gaussian filter of image
 
-__kernel void gaussian_filter(__read_only image2d_t srcImg,
-                              __write_only image2d_t dstImg,
-                              sampler_t sampler,
-                              int width, int height)
+__kernel void gaussian_filter(
+        __read_only image2d_t srcImg,
+        __write_only image2d_t dstImg,
+      sampler_t sampler,
+     int width, int height
+        )
 {
     // Gaussian Kernel is:
     // 1  2  1
@@ -19,7 +21,8 @@ __kernel void gaussian_filter(__read_only image2d_t srcImg,
     if (outImageCoord.x < width && outImageCoord.y < height)
     {
         int weight = 0;
-        float4 outColor = (float4)(0.0f, 0.0f, 0.0f, 0.0f);
+        float4 outColor = (float4)(0.0f, 0.0f, 0.0f, 1.0f);
+//         float3 outColor = (float3)(0.0f, 0.0f, 0.0f );
         for( int y = startImageCoord.y; y <= endImageCoord.y; y++)
         {
             for( int x = startImageCoord.x; x <= endImageCoord.x; x++)
@@ -28,6 +31,9 @@ __kernel void gaussian_filter(__read_only image2d_t srcImg,
                 weight += 1;
             }
         }
+
+        outColor = (float4)(1.0f, 1.0f,1.0f, 0.0f);
+
         // Write the output value to image
         write_imagef(dstImg, outImageCoord, outColor);
     }

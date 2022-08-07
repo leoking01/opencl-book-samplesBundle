@@ -333,7 +333,7 @@ cl_sampler sampler)
 //  Load an image using the FreeImage library and create an OpenCL
 //  image out of it
 //
-cl_mem LoadImage(cl_context context, char *fileName, int &width, int &height)
+cl_mem LoadImage_lk(cl_context context, char *fileName, int &width, int &height)
 {
 #if  0
     FREE_IMAGE_FORMAT format = FreeImage_GetFileType(fileName, 0);
@@ -347,27 +347,33 @@ cl_mem LoadImage(cl_context context, char *fileName, int &width, int &height)
     width = FreeImage_GetWidth(image);
     height = FreeImage_GetHeight(image);
 #endif
-    cv::Mat    img = cv::imread( fileName,  1 );
+    cv::Mat    img = cv::imread( fileName,  0 );
+    cv::imshow( "img-in", img);
+//    cv::waitKey( ) ;
+
     cv::Mat  imgrgba ;
-    cv::cvtColor( img, imgrgba, cv::COLOR_RGB2RGBA);
-    img = imgrgba;
+//    cv::cvtColor( img, imgrgba, cv::COLOR_RGB2RGBA);
+//    img = imgrgba;
     width = img.cols;
     height = img.rows;
-    char *buffer = new char[width * height * 4];
+    int chans = img.channels();
+    char *buffer = new char[width * height * chans];
 #if  0
-    memcpy(buffer, FreeImage_GetBits(image), width * height * 4);
+    memcpy(buffer, FreeImage_GetBits(image), width * height *chans);
     FreeImage_Unload(image);
 #endif
-    memcpy(buffer,  (img.data), width * height * 4);
+    memcpy(buffer,  (img.data), width * height * chans);
 
     // Create OpenCL image
     cl_image_format clImageFormat;
-    clImageFormat.image_channel_order = CL_RGBA;
-    clImageFormat.image_channel_data_type = CL_UNORM_INT8;
+//    clImageFormat.image_channel_order = CL_RGBA;
+     clImageFormat.image_channel_order = CL_A;
+    clImageFormat.image_channel_data_type = CL_UNSIGNED_INT8;//CL_UNORM_INT8;
 
     cl_int errNum;
     cl_mem clImage;
-    clImage = clCreateImage2D(context,
+    clImage = clCreateImage2D(
+                context,
                               CL_MEM_READ_ONLY | CL_MEM_COPY_HOST_PTR,
                               &clImageFormat,
                               width,
@@ -397,7 +403,7 @@ bool SaveImage(char *fileName, char *buffer, int width, int height)
                                                    0xFF000000, 0x00FF0000, 0x0000FF00);
     return (FreeImage_Save(format, image, fileName) == TRUE) ? true : false;
     #endif
-    cv::Mat  img(height,width, CV_8UC4 );
+    cv::Mat  img(height,width, CV_8UC1 );
     img.data = (uchar*)buffer;
     cv::imwrite(fileName,img  );
     cv::imshow( "img", img );
@@ -480,7 +486,7 @@ int main(int argc, char** argv)
     // Load input image from file and load it into
     // an OpenCL image object
     int width, height;
-    imageObjects[0] = LoadImage(context, argv[1], width, height);
+    imageObjects[0] = LoadImage_lk(context, argv[1], width, height);
     if (imageObjects[0] == 0)
     {
         std::cerr << "Error loading: " << std::string(argv[1]) << std::endl;
@@ -494,9 +500,11 @@ int main(int argc, char** argv)
 
     // Create ouput image object
     cl_image_format clImageFormat;
-    clImageFormat.image_channel_order = CL_RGBA;
-    clImageFormat.image_channel_data_type = CL_UNORM_INT8;
-    imageObjects[1] = clCreateImage2D(context,
+//    clImageFormat.image_channel_order = CL_RGBA;
+      clImageFormat.image_channel_order = CL_A;
+    clImageFormat.image_channel_data_type = CL_UNSIGNED_INT8;// CL_UNORM_INT8;
+    imageObjects[1] = clCreateImage2D(
+                context,
                                       CL_MEM_WRITE_ONLY,
                                       &clImageFormat,
                                       width,
@@ -514,7 +522,8 @@ int main(int argc, char** argv)
 
 
     // Create sampler for sampling image object
-    sampler = clCreateSampler(context,
+    sampler = clCreateSampler(
+                context,
                               CL_FALSE, // Non-normalized coordinates
                               CL_ADDRESS_CLAMP_TO_EDGE,
                               CL_FILTER_NEAREST,
